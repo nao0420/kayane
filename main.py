@@ -47,11 +47,34 @@ async def on_ready():
 
 @client.event
 async def on_message_join(member):
-     channel = member.get_channel(823615900384100327)
+     channel = member.get_channel(823615900384100372)
      embed=discord.Embed(title=f"welcome {member.name}",description=f"Thanks for Joining {member.guild.name}!")
      embed.set_thumbnail(url=member.avatar_url)
 
      await channel.send(embed=embed)
+     
+@client.command(aliases=['rules'])
+async def rule(ctx,*,number):
+    await ctx.send(rule[int(number)-1])
+
+@client.command(aliases=['c'])
+@commands.has_permissions(manage_messages = True)
+async def clear(ctx,amount=2):
+     await ctx.channel.purge(limit = amount)
+
+@client.command(aliases=['k'])
+@commands.has_permissions(kick_members = True)
+async def kick(ctx,member : discord.Member, *,reason= "no reason provided"):
+    await member.send("You have been kicked from lil tokyo, Because:"+reason)
+    await member.kick(reason=reason)
+
+@client.command(aliases=['b'])
+@commands.has_permissions(ban_members = True)
+async def ban(ctx,member : discord.member, *, reason= "no reason provided"):
+    await member.send("You have beend banned from lil tokyo, because:"+reason)
+    await member.ban(reason=reason)
+
+
 keep_alive.keep_alive()
 my_token = os.environ['bot_token']
 client.run(my_token)
