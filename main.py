@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import datetime
 import os
+import keep_alive
 
 from urllib import parse, request
 import re
@@ -51,6 +52,6 @@ async def on_message_join(member):
      embed.set_thumbnail(url=member.avatar_url)
 
      await channel.send(embed=embed)
-
+keep_alive.keep_alive()
 my_token = os.environ['bot_token']
 client.run(my_token)
